@@ -114,7 +114,7 @@ public partial class MainWindowViewModel : ViewModelBase
                     p.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
 
                 StatusMessage = existing is not null
-                    ? $"Conta ativa: {existing.Name}"
+                    ? $"Conta ativa: {existing.DisplayName}"
                     : "Configuração Git carregada.";
             }
             else
@@ -182,7 +182,7 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             Profiles.Add(dialog.Result);
             _storageService.SaveProfiles([.. Profiles]);
-            StatusMessage = $"Conta '{dialog.Result.Name}' criada.";
+            StatusMessage = $"Conta '{dialog.Result.DisplayName}' criada.";
         }
     }
 
@@ -356,12 +356,12 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         if (profile is null) return;
 
-        var confirmed = await ShowConfirmMessage($"Tem certeza que deseja excluir o perfil '{profile.Name}'?");
+        var confirmed = await ShowConfirmMessage($"Tem certeza que deseja excluir o perfil '{profile.DisplayName}'?");
         if (!confirmed) return;
 
         Profiles.Remove(profile);
         _storageService.SaveProfiles([.. Profiles]);
-        StatusMessage = $"'{profile.Name}' removida.";
+        StatusMessage = $"'{profile.DisplayName}' removida.";
     }
 
     [RelayCommand]
@@ -497,7 +497,7 @@ public partial class MainWindowViewModel : ViewModelBase
                 dialog.Result.Id = profile.Id;
                 Profiles[index] = dialog.Result;
                 _storageService.SaveProfiles([.. Profiles]);
-                StatusMessage = $"Conta '{dialog.Result.Name}' atualizada.";
+                StatusMessage = $"Conta '{dialog.Result.DisplayName}' atualizada.";
             }
         }
     }
@@ -510,7 +510,7 @@ public partial class MainWindowViewModel : ViewModelBase
         var cloned = profile.Clone();
         Profiles.Add(cloned);
         _storageService.SaveProfiles([.. Profiles]);
-        StatusMessage = $"Perfil '{profile.Name}' clonado como '{cloned.Name}'.";
+        StatusMessage = $"Perfil '{profile.DisplayName}' clonado como '{cloned.DisplayName}'.";
 
         var dialog = new EditProfileDialog();
         dialog.SetData(cloned.Name, cloned.UserName, cloned.Email, cloned.RepositoryPath);
@@ -531,7 +531,7 @@ public partial class MainWindowViewModel : ViewModelBase
                 dialog.Result.Id = cloned.Id;
                 Profiles[index] = dialog.Result;
                 _storageService.SaveProfiles([.. Profiles]);
-                StatusMessage = $"Perfil '{dialog.Result.Name}' atualizado.";
+                StatusMessage = $"Perfil '{dialog.Result.DisplayName}' atualizado.";
             }
         }
     }
@@ -601,7 +601,7 @@ public partial class MainWindowViewModel : ViewModelBase
                 }
                 OnPropertyChanged(nameof(Profiles));
 
-                StatusMessage = $"Conta '{profile.Name}' ativa em {Path.GetFileName(profile.RepositoryPath)}";
+                StatusMessage = $"Conta '{profile.DisplayName}' ativa em {Path.GetFileName(profile.RepositoryPath)}";
             }
             else
             {
@@ -620,9 +620,9 @@ public partial class MainWindowViewModel : ViewModelBase
                 OnPropertyChanged(nameof(Profiles));
 
                 if (hasFolder)
-                    StatusMessage = $"Conta '{profile.Name}' ativa (global) — pasta: {Path.GetFileName(profile.RepositoryPath)}";
+                    StatusMessage = $"Conta '{profile.DisplayName}' ativa (global) — pasta: {Path.GetFileName(profile.RepositoryPath)}";
                 else
-                    StatusMessage = $"Conta '{profile.Name}' ativa (global)";
+                    StatusMessage = $"Conta '{profile.DisplayName}' ativa (global)";
             }
         }
         catch (Exception ex)

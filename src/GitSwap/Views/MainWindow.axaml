@@ -21,26 +21,7 @@
     <Grid RowDefinitions="Auto,Auto,Auto,*,Auto,Auto">
 
         <!-- Menu -->
-        <Menu Grid.Row="0" Background="#F1F5F9" Foreground="#0F172A">
-            <Menu.Styles>
-                <Style Selector="Menu">
-                    <Setter Property="Background" Value="#F1F5F9"/>
-                    <Setter Property="Foreground" Value="#0F172A"/>
-                </Style>
-                <Style Selector="MenuItem">
-                    <Setter Property="Background" Value="#F1F5F9"/>
-                    <Setter Property="Foreground" Value="#0F172A"/>
-                </Style>
-                <Style Selector="MenuItem:pointerover /template/ Border">
-                    <Setter Property="Background" Value="#E2E8F0"/>
-                </Style>
-                <Style Selector="MenuItem:pressed /template/ Border">
-                    <Setter Property="Background" Value="#CBD5E1"/>
-                </Style>
-                <Style Selector="MenuItem /template/ Border#root">
-                    <Setter Property="Background" Value="#F1F5F9"/>
-                </Style>
-            </Menu.Styles>
+        <Menu Grid.Row="0">
             <MenuItem Header="Arquivo">
                 <MenuItem Header="Adicionar conta"
                           Command="{Binding AddProfileCommand}"/>
@@ -152,7 +133,7 @@
                                     <StackPanel Spacing="10">
                                         <Grid ColumnDefinitions="*,Auto">
                                             <StackPanel Grid.Column="0" VerticalAlignment="Center" Spacing="3">
-                                                <TextBlock Text="{Binding Name}"
+                                                <TextBlock Text="{Binding DisplayName}"
                                                            FontSize="16" FontWeight="SemiBold"
                                                            Foreground="#0F172A"/>
                                                 <TextBlock FontSize="13" Foreground="#64748B"

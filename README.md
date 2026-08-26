@@ -8,7 +8,7 @@ O GitSwap é uma aplicação desktop que permite gerenciar e alternar entre dife
 
 ## Versão
 
-**v1.0.0** — Versão inicial
+**v1.1.0** — Versão atual
 
 ---
 
@@ -47,6 +47,14 @@ O GitSwap é uma aplicação desktop que permite gerenciar e alternar entre dife
 ---
 
 ## Changelog
+
+### v1.1.0 — 26/08/2026
+
+| # | Funcionalidade | Descrição |
+|---|----------------|-----------|
+| 1 | Capitalização de nomes | Primeira letra do nome do perfil e do user.name do Git sempre maiúscula |
+| 2 | Menu nativo do SO | Menu agora segue o estilo nativo do sistema operacional |
+| 3 | Nome na barra de menu | Aplicação exibe "GitSwap" na barra de menu (macOS e outros SOs) |
 
 ### v1.0.0 — 25/08/2026
 

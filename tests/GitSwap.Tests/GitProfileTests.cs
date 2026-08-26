@@ -100,4 +100,44 @@ public class GitProfileTests
         };
         Assert.False(profile.IsGlobal);
     }
+
+    [Fact]
+    public void DisplayName_WithLowercaseName_ReturnsCapitalized()
+    {
+        var profile = new GitProfile
+        {
+            Name = "joão da silva"
+        };
+        Assert.Equal("João da silva", profile.DisplayName);
+    }
+
+    [Fact]
+    public void DisplayName_WithUppercaseName_ReturnsSame()
+    {
+        var profile = new GitProfile
+        {
+            Name = "João da Silva"
+        };
+        Assert.Equal("João da Silva", profile.DisplayName);
+    }
+
+    [Fact]
+    public void DisplayName_WithEmptyName_ReturnsEmpty()
+    {
+        var profile = new GitProfile
+        {
+            Name = ""
+        };
+        Assert.Equal("", profile.DisplayName);
+    }
+
+    [Fact]
+    public void DisplayName_WithWhitespaceName_ReturnsWhitespace()
+    {
+        var profile = new GitProfile
+        {
+            Name = "   "
+        };
+        Assert.Equal("   ", profile.DisplayName);
+    }
 }

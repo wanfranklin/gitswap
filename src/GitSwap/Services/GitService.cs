@@ -57,9 +57,10 @@ public class GitService
 
     public async Task SetUserNameAsync(string userName, string? repositoryPath = null)
     {
+        var formattedName = FormatName(userName);
         var args = repositoryPath is null
-            ? new[] { "config", "--global", "user.name", userName }
-            : new[] { "config", "--local", "user.name", userName };
+            ? new[] { "config", "--global", "user.name", formattedName }
+            : new[] { "config", "--local", "user.name", formattedName };
         var result = await RunGitCommandAsync(args, repositoryPath);
         if (result.ExitCode != 0)
             throw new InvalidOperationException($"Falha ao definir user.name: {result.Error}");
@@ -153,4 +154,12 @@ public class GitService
     }
 
     private record GitCommandResult(int ExitCode, string Output, string Error);
+
+    private static string FormatName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            return name;
+
+        return char.ToUpper(name[0]) + name[1..];
+    }
 }

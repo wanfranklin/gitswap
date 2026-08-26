@@ -80,6 +80,18 @@ public class GitProfile : INotifyPropertyChanged
         };
     }
 
+    [JsonIgnore]
+    public string DisplayName
+    {
+        get
+        {
+            if (string.IsNullOrWhiteSpace(Name))
+                return Name;
+
+            return char.ToUpper(Name[0]) + Name[1..];
+        }
+    }
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
