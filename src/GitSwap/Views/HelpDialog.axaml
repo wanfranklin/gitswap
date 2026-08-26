@@ -1,0 +1,427 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="GitSwap.Views.HelpDialog"
+        Title="Ajuda do GitSwap"
+        Width="820" Height="600"
+        MinWidth="680" MinHeight="480"
+        WindowStartupLocation="CenterOwner"
+        Background="#F3F4F6">
+
+    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="240,*">
+
+        <!-- Header -->
+        <Border Grid.Row="0" Grid.ColumnSpan="2"
+                Background="#0078D4" Padding="24,16">
+            <StackPanel Spacing="4">
+                <TextBlock Text="Ajuda do GitSwap"
+                           FontSize="20" FontWeight="SemiBold"
+                           Foreground="White"/>
+                <TextBlock Text="Guia de uso da aplicação"
+                           FontSize="13"
+                           Foreground="#B3D7F2"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Sidebar -->
+        <Border Grid.Row="1" Grid.Column="0"
+                Background="#FFFFFF"
+                BorderBrush="#E5E7EB" BorderThickness="0,0,1,0">
+            <ListBox x:Name="TopicsList"
+                     Background="Transparent"
+                     BorderThickness="0"
+                     Padding="0"
+                     SelectionChanged="TopicsList_SelectionChanged">
+                <ListBox.Styles>
+                    <Style Selector="ListBoxItem">
+                        <Setter Property="Padding" Value="16,12"/>
+                        <Setter Property="FontSize" Value="14"/>
+                        <Setter Property="Foreground" Value="#374151"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                    </Style>
+                    <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+                        <Setter Property="Background" Value="#F3F4F6"/>
+                    </Style>
+                    <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                        <Setter Property="Background" Value="#EFF6FF"/>
+                        <Setter Property="Foreground" Value="#1D4ED8"/>
+                    </Style>
+                </ListBox.Styles>
+                <ListBoxItem Content="Visão Geral" IsSelected="True"/>
+                <ListBoxItem Content="Adicionar Conta"/>
+                <ListBoxItem Content="Editar Conta"/>
+                <ListBoxItem Content="Alternar Conta"/>
+                <ListBoxItem Content="Remover Conta"/>
+                <ListBoxItem Content="Conta Ativa"/>
+                <ListBoxItem Content="Onde os Dados são Salvos"/>
+            </ListBox>
+        </Border>
+
+        <!-- Content Area -->
+        <Border Grid.Row="1" Grid.Column="1"
+                Background="#FFFFFF">
+            <ScrollViewer Padding="32,24">
+                <StackPanel Spacing="0">
+
+                    <!-- Visao Geral -->
+                    <StackPanel x:Name="PanelVisaoGeral" Spacing="16">
+                        <TextBlock Text="Visão Geral"
+                                   FontSize="22" FontWeight="SemiBold"
+                                   Foreground="#111827"/>
+                        <TextBlock TextWrapping="Wrap" FontSize="14" Foreground="#4B5563" LineHeight="22">
+                            O GitSwap é uma ferramenta para gerenciar múltiplas contas Git no mesmo computador. Ele permite trocar rapidamente entre perfis de usuário e e-mail, sem precisar lembrar de comandos de terminal.
+                        </TextBlock>
+                        <Border Background="#EFF6FF" CornerRadius="8" Padding="16,12">
+                            <StackPanel Spacing="6">
+                                <TextBlock Text="Principais recursos" FontWeight="SemiBold"
+                                           FontSize="14" Foreground="#1E40AF"/>
+                                <TextBlock Text="&#x2022;  Gerenciar múltiplos perfis Git" FontSize="13" Foreground="#374151" TextWrapping="Wrap"/>
+                                <TextBlock Text="&#x2022;  Alternar entre contas com um clique" FontSize="13" Foreground="#374151" TextWrapping="Wrap"/>
+                                <TextBlock Text="&#x2022;  Aplicar configuração local ou global" FontSize="13" Foreground="#374151" TextWrapping="Wrap"/>
+                                <TextBlock Text="&#x2022;  Visualizar a conta ativa no momento" FontSize="13" Foreground="#374151" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Adicionar Conta -->
+                    <StackPanel x:Name="PanelAdicionar" Spacing="16" IsVisible="False">
+                        <TextBlock Text="Adicionar uma Conta"
+                                   FontSize="22" FontWeight="SemiBold"
+                                   Foreground="#111827"/>
+                        <TextBlock Text="Para adicionar uma nova conta Git, siga os passos abaixo:"
+                                   FontSize="14" Foreground="#4B5563" TextWrapping="Wrap"/>
+                        <StackPanel Spacing="10">
+                            <Border Background="#F9FAFB" CornerRadius="8" Padding="16,12">
+                                <Grid ColumnDefinitions="32,*" ColumnSpacing="12">
+                                    <Border Background="#3B82F6" CornerRadius="20"
+                                            Width="28" Height="28" VerticalAlignment="Top" Margin="0,2,0,0">
+                                        <TextBlock Text="1" FontSize="13" FontWeight="Bold"
+                                                   Foreground="White"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Grid.Column="1"
+                                               Text="Clique em '+ Adicionar conta' na parte inferior da janela principal, ou vá em Arquivo > Adicionar conta."
+                                               FontSize="14" Foreground="#374151"
+                                               TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Border>
+                            <Border Background="#F9FAFB" CornerRadius="8" Padding="16,12">
+                                <Grid ColumnDefinitions="32,*" ColumnSpacing="12">
+                                    <Border Background="#3B82F6" CornerRadius="20"
+                                            Width="28" Height="28" VerticalAlignment="Top" Margin="0,2,0,0">
+                                        <TextBlock Text="2" FontSize="13" FontWeight="Bold"
+                                                   Foreground="White"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <StackPanel Grid.Column="1" Spacing="2">
+                                        <TextBlock Text="Preencha os campos:" FontSize="14" Foreground="#374151" TextWrapping="Wrap"/>
+                                         <TextBlock Text="  &#x2022;  Nome do perfil: nome descritivo (ex: Trabalho, Pessoal)" FontSize="13" Foreground="#6B7280" TextWrapping="Wrap"/>
+                                        <TextBlock Text="  &#x2022;  Nome do usuário Git: nome que aparecerá nos commits" FontSize="13" Foreground="#6B7280" TextWrapping="Wrap"/>
+                                        <TextBlock Text="  &#x2022;  E-mail: e-mail que aparecerá nos commits" FontSize="13" Foreground="#6B7280" TextWrapping="Wrap"/>
+                                        <TextBlock Text="  &#x2022;  Pasta do repositório (opcional): para aplicar apenas em um repositório" FontSize="13" Foreground="#6B7280" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                            <Border Background="#F9FAFB" CornerRadius="8" Padding="16,12">
+                                <Grid ColumnDefinitions="32,*" ColumnSpacing="12">
+                                    <Border Background="#3B82F6" CornerRadius="20"
+                                            Width="28" Height="28" VerticalAlignment="Top" Margin="0,2,0,0">
+                                        <TextBlock Text="3" FontSize="13" FontWeight="Bold"
+                                                   Foreground="White"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Grid.Column="1"
+                                               Text="Clique em Salvar."
+                                               FontSize="14" Foreground="#374151"
+                                               TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Editar Conta -->
+                    <StackPanel x:Name="PanelEditar" Spacing="16" IsVisible="False">
+                        <TextBlock Text="Editar uma Conta"
+                                   FontSize="22" FontWeight="SemiBold"
+                                   Foreground="#111827"/>
+                        <TextBlock Text="Para editar os dados de uma conta existente:"
+                                   FontSize="14" Foreground="#4B5563" TextWrapping="Wrap"/>
+                        <StackPanel Spacing="10">
+                            <Border Background="#F9FAFB" CornerRadius="8" Padding="16,12">
+                                <Grid ColumnDefinitions="32,*" ColumnSpacing="12">
+                                    <Border Background="#16A34A" CornerRadius="20"
+                                            Width="28" Height="28" VerticalAlignment="Top" Margin="0,2,0,0">
+                                        <TextBlock Text="1" FontSize="13" FontWeight="Bold"
+                                                   Foreground="White"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Grid.Column="1"
+                                               Text="Clique no botão Editar (ícone de lápis) ao lado do perfil que deseja alterar."
+                                               FontSize="14" Foreground="#374151"
+                                               TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Border>
+                            <Border Background="#F9FAFB" CornerRadius="8" Padding="16,12">
+                                <Grid ColumnDefinitions="32,*" ColumnSpacing="12">
+                                    <Border Background="#16A34A" CornerRadius="20"
+                                            Width="28" Height="28" VerticalAlignment="Top" Margin="0,2,0,0">
+                                        <TextBlock Text="2" FontSize="13" FontWeight="Bold"
+                                                   Foreground="White"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Grid.Column="1"
+                                               Text="Altere os dados necessários (nome, e-mail, pasta do repositório)."
+                                               FontSize="14" Foreground="#374151"
+                                               TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Border>
+                            <Border Background="#F9FAFB" CornerRadius="8" Padding="16,12">
+                                <Grid ColumnDefinitions="32,*" ColumnSpacing="12">
+                                    <Border Background="#16A34A" CornerRadius="20"
+                                            Width="28" Height="28" VerticalAlignment="Top" Margin="0,2,0,0">
+                                        <TextBlock Text="3" FontSize="13" FontWeight="Bold"
+                                                   Foreground="White"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Grid.Column="1"
+                                               Text="Clique em Salvar para confirmar as alterações."
+                                               FontSize="14" Foreground="#374151"
+                                               TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Alternar Conta -->
+                    <StackPanel x:Name="PanelAlternar" Spacing="16" IsVisible="False">
+                        <TextBlock Text="Alternar de Conta"
+                                   FontSize="22" FontWeight="SemiBold"
+                                   Foreground="#111827"/>
+                        <TextBlock Text="Para ativar uma conta Git diferente:"
+                                   FontSize="14" Foreground="#4B5563" TextWrapping="Wrap"/>
+                        <StackPanel Spacing="10">
+                            <Border Background="#F9FAFB" CornerRadius="8" Padding="16,12">
+                                <Grid ColumnDefinitions="32,*" ColumnSpacing="12">
+                                    <Border Background="#F59E0B" CornerRadius="20"
+                                            Width="28" Height="28" VerticalAlignment="Top" Margin="0,2,0,0">
+                                        <TextBlock Text="1" FontSize="13" FontWeight="Bold"
+                                                   Foreground="White"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Grid.Column="1"
+                                               Text="Clique no botão Usar (ícone de seleção) ao lado do perfil desejado."
+                                               FontSize="14" Foreground="#374151"
+                                               TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Border>
+                            <Border Background="#F9FAFB" CornerRadius="8" Padding="16,12">
+                                <Grid ColumnDefinitions="32,*" ColumnSpacing="12">
+                                    <Border Background="#F59E0B" CornerRadius="20"
+                                            Width="28" Height="28" VerticalAlignment="Top" Margin="0,2,0,0">
+                                        <TextBlock Text="2" FontSize="13" FontWeight="Bold"
+                                                   Foreground="White"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Grid.Column="1"
+                                               Text="Confirme a troca no diálogo de confirmação."
+                                               FontSize="14" Foreground="#374151"
+                                               TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Border>
+                            <Border Background="#F9FAFB" CornerRadius="8" Padding="16,12">
+                                <Grid ColumnDefinitions="32,*" ColumnSpacing="12">
+                                    <Border Background="#F59E0B" CornerRadius="20"
+                                            Width="28" Height="28" VerticalAlignment="Top" Margin="0,2,0,0">
+                                        <TextBlock Text="3" FontSize="13" FontWeight="Bold"
+                                                   Foreground="White"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Grid.Column="1"
+                                               Text="A conta será ativada automaticamente."
+                                               FontSize="14" Foreground="#374151"
+                                               TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                        <Border Background="#FEF3C7" CornerRadius="8" Padding="16,12">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="&#x26A0;  Importante" FontWeight="SemiBold"
+                                           FontSize="14" Foreground="#92400E"/>
+                                <TextBlock Text="Se o perfil tiver uma pasta de repositório definida, a configuração será aplicada apenas nessa pasta (local). Caso contrário, será aplicada globalmente no Git."
+                                           FontSize="13" Foreground="#92400E" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Remover Conta -->
+                    <StackPanel x:Name="PanelRemover" Spacing="16" IsVisible="False">
+                        <TextBlock Text="Remover uma Conta"
+                                   FontSize="22" FontWeight="SemiBold"
+                                   Foreground="#111827"/>
+                        <TextBlock Text="Para excluir uma conta Git do GitSwap:"
+                                   FontSize="14" Foreground="#4B5563" TextWrapping="Wrap"/>
+                        <StackPanel Spacing="10">
+                            <Border Background="#F9FAFB" CornerRadius="8" Padding="16,12">
+                                <Grid ColumnDefinitions="32,*" ColumnSpacing="12">
+                                    <Border Background="#DC2626" CornerRadius="20"
+                                            Width="28" Height="28" VerticalAlignment="Top" Margin="0,2,0,0">
+                                        <TextBlock Text="1" FontSize="13" FontWeight="Bold"
+                                                   Foreground="White"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Grid.Column="1"
+                                               Text="Clique no botão Excluir (ícone de lixeira) ao lado do perfil."
+                                               FontSize="14" Foreground="#374151"
+                                               TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Border>
+                            <Border Background="#F9FAFB" CornerRadius="8" Padding="16,12">
+                                <Grid ColumnDefinitions="32,*" ColumnSpacing="12">
+                                    <Border Background="#DC2626" CornerRadius="20"
+                                            Width="28" Height="28" VerticalAlignment="Top" Margin="0,2,0,0">
+                                        <TextBlock Text="2" FontSize="13" FontWeight="Bold"
+                                                   Foreground="White"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Grid.Column="1"
+                                               Text="Confirme a exclusão no diálogo que aparecerá."
+                                               FontSize="14" Foreground="#374151"
+                                               TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                        <Border Background="#FEF2F2" CornerRadius="8" Padding="16,12">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="&#x26A0;  Atenção" FontWeight="SemiBold"
+                                           FontSize="14" Foreground="#991B1B"/>
+                                <TextBlock Text="Esta ação remove o perfil do GitSwap. A configuração Git no computador não será alterada."
+                                           FontSize="13" Foreground="#991B1B" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Conta Ativa -->
+                    <StackPanel x:Name="PanelContaAtiva" Spacing="16" IsVisible="False">
+                        <TextBlock Text="Conta Ativa"
+                                   FontSize="22" FontWeight="SemiBold"
+                                   Foreground="#111827"/>
+                        <TextBlock Text="A seção CONTA ATIVA no topo da janela principal exibe as configurações Git vigentes."
+                                   FontSize="14" Foreground="#4B5563" TextWrapping="Wrap"/>
+                        <StackPanel Spacing="12">
+                            <Border Background="#F9FAFB" CornerRadius="8" Padding="16,12">
+                                <StackPanel Spacing="6">
+                                    <TextBlock Text="O que é exibido:" FontWeight="SemiBold"
+                                               FontSize="14" Foreground="#374151"/>
+                                    <TextBlock Text="  &#x2022;  Nome do usuário Git configurado" FontSize="13" Foreground="#6B7280" TextWrapping="Wrap"/>
+                                    <TextBlock Text="  &#x2022;  E-mail do usuário Git configurado" FontSize="13" Foreground="#6B7280" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Background="#F9FAFB" CornerRadius="8" Padding="16,12">
+                                <StackPanel Spacing="8">
+                                    <TextBlock Text="Alcance da configuração:" FontWeight="SemiBold"
+                                               FontSize="14" Foreground="#374151"/>
+                                    <StackPanel Spacing="6">
+                                        <StackPanel Orientation="Horizontal" Spacing="8">
+                                            <Border Background="#DBEAFE" CornerRadius="6" Padding="10,4">
+                                                <TextBlock Text="Global" FontSize="12" FontWeight="SemiBold"
+                                                           Foreground="#3B82F6"/>
+                                            </Border>
+                                            <TextBlock Text="Afeta todos os repositórios do computador"
+                                                       FontSize="13" Foreground="#6B7280"
+                                                       TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Spacing="8">
+                                            <Border Background="#DCFCE7" CornerRadius="6" Padding="10,4">
+                                                <TextBlock Text="Local" FontSize="12" FontWeight="SemiBold"
+                                                           Foreground="#16A34A"/>
+                                            </Border>
+                                            <TextBlock Text="Afeta apenas o repositório indicado"
+                                                       FontSize="13" Foreground="#6B7280"
+                                                       TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Onde os Dados sao Salvos -->
+                    <StackPanel x:Name="PanelDados" Spacing="16" IsVisible="False">
+                        <TextBlock Text="Onde os Dados são Salvos"
+                                   FontSize="22" FontWeight="SemiBold"
+                                   Foreground="#111827"/>
+                        <TextBlock Text="Os perfis criados no GitSwap são salvos localmente no computador, no seguinte caminho:"
+                                   FontSize="14" Foreground="#4B5563" TextWrapping="Wrap"/>
+                        <Border Background="#F9FAFB" CornerRadius="8" Padding="16,12">
+                            <StackPanel Spacing="10">
+                                <Border Background="#EFF6FF" CornerRadius="6" Padding="12,8">
+                                    <StackPanel Spacing="4">
+                                        <TextBlock Text="Windows" FontWeight="SemiBold" FontSize="13"
+                                                   Foreground="#1E40AF"/>
+                                        <TextBlock Text="%APPDATA%\GitSwap\profiles.json"
+                                                   FontSize="13" Foreground="#6B7280"
+                                                   FontFamily="Consolas,Menlo,monospace"
+                                                   TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="#F0FDF4" CornerRadius="6" Padding="12,8">
+                                    <StackPanel Spacing="4">
+                                        <TextBlock Text="macOS" FontWeight="SemiBold" FontSize="13"
+                                                   Foreground="#166534"/>
+                                        <TextBlock Text="~/.config/GitSwap/profiles.json"
+                                                   FontSize="13" Foreground="#6B7280"
+                                                   FontFamily="Consolas,Menlo,monospace"
+                                                   TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="#EFF6FF" CornerRadius="6" Padding="12,8">
+                                    <StackPanel Spacing="4">
+                                        <TextBlock Text="Linux" FontWeight="SemiBold" FontSize="13"
+                                                   Foreground="#1E40AF"/>
+                                        <TextBlock Text="~/.config/GitSwap/profiles.json"
+                                                   FontSize="13" Foreground="#6B7280"
+                                                   FontFamily="Consolas,Menlo,monospace"
+                                                   TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+                        <Border Background="#FEF3C7" CornerRadius="8" Padding="16,12">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="&#x2139;  Dica" FontWeight="SemiBold"
+                                           FontSize="14" Foreground="#92400E"/>
+                                <TextBlock Text="Você pode fazer backup do arquivo profiles.json para transferir seus perfis para outro computador."
+                                           FontSize="13" Foreground="#92400E" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Footer -->
+        <Border Grid.Row="2" Grid.ColumnSpan="2"
+                Background="#F9FAFB"
+                BorderBrush="#E5E7EB" BorderThickness="0,1,0,0"
+                Padding="24,12">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="12">
+                <Button x:Name="CloseButton"
+                        Content="Fechar"
+                        Padding="32,10" FontSize="14" FontWeight="SemiBold"
+                        CornerRadius="6"
+                        Background="#0078D4" Foreground="White"
+                        BorderBrush="#005A9E" BorderThickness="1">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background" Value="#005A9E"/>
+                        </Style>
+                        <Style Selector="Button:pressed /template/ ContentPresenter">
+                            <Setter Property="Background" Value="#004578"/>
+                        </Style>
+                    </Button.Styles>
+                </Button>
+            </StackPanel>
+        </Border>
+
+    </Grid>
+</Window>

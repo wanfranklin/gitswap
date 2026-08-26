@@ -1,0 +1,450 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:GitSwap.ViewModels"
+        xmlns:models="using:GitSwap.Models"
+        x:Class="GitSwap.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="GitSwap"
+        Width="560" Height="760"
+        CanResize="False"
+        WindowStartupLocation="CenterScreen"
+        Background="#F1F5F9"
+        Icon="avares://GitSwap/Assets/icon.png">
+
+    <Window.KeyBindings>
+        <KeyBinding Gesture="Ctrl+N" Command="{Binding AddProfileCommand}"/>
+        <KeyBinding Gesture="Ctrl+E" Command="{Binding ExportProfilesCommand}"/>
+        <KeyBinding Gesture="Ctrl+I" Command="{Binding ImportProfilesCommand}"/>
+        <KeyBinding Gesture="Ctrl+H" Command="{Binding ShowHelpCommand}"/>
+    </Window.KeyBindings>
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto,Auto">
+
+        <!-- Menu -->
+        <Menu Grid.Row="0" Background="#F1F5F9" Foreground="#0F172A">
+            <Menu.Styles>
+                <Style Selector="Menu">
+                    <Setter Property="Background" Value="#F1F5F9"/>
+                    <Setter Property="Foreground" Value="#0F172A"/>
+                </Style>
+                <Style Selector="MenuItem">
+                    <Setter Property="Background" Value="#F1F5F9"/>
+                    <Setter Property="Foreground" Value="#0F172A"/>
+                </Style>
+                <Style Selector="MenuItem:pointerover /template/ Border">
+                    <Setter Property="Background" Value="#E2E8F0"/>
+                </Style>
+                <Style Selector="MenuItem:pressed /template/ Border">
+                    <Setter Property="Background" Value="#CBD5E1"/>
+                </Style>
+                <Style Selector="MenuItem /template/ Border#root">
+                    <Setter Property="Background" Value="#F1F5F9"/>
+                </Style>
+            </Menu.Styles>
+            <MenuItem Header="Arquivo">
+                <MenuItem Header="Adicionar conta"
+                          Command="{Binding AddProfileCommand}"/>
+                <Separator/>
+                <MenuItem Header="Exportar perfis"
+                          Command="{Binding ExportProfilesCommand}"/>
+                <MenuItem Header="Importar perfis"
+                          Command="{Binding ImportProfilesCommand}"/>
+                <Separator/>
+                <MenuItem Header="Sair"
+                          Command="{Binding ExitCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Ajuda">
+                <MenuItem Header="Ajuda do GitSwap"
+                          Command="{Binding ShowHelpCommand}"/>
+                <MenuItem Header="Configuração do Git"
+                          Command="{Binding ShowGitConfigCommand}"/>
+                <Separator/>
+                <MenuItem Header="Cafézin pro dev"
+                          Command="{Binding OpenDonationCommand}">
+                    <MenuItem.Icon>
+                        <Viewbox Width="16" Height="16" Stretch="Uniform">
+                            <Path Data="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                                  Fill="#DC2626"/>
+                        </Viewbox>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Sobre"
+                          Command="{Binding ShowAboutCommand}"/>
+            </MenuItem>
+        </Menu>
+
+        <!-- Header -->
+        <Border Grid.Row="1" Padding="23,20,28,16">
+            <Image Source="avares://GitSwap/Assets/logo.png"
+                   Height="48"
+                   RenderOptions.BitmapInterpolationMode="HighQuality"
+                   HorizontalAlignment="Left"/>
+        </Border>
+
+        <!-- Conta Ativa -->
+        <Border Grid.Row="2" Margin="20,0,20,16" Padding="20"
+                Background="White" CornerRadius="14"
+                BoxShadow="0 1 3 0 #1A000000">
+            <Grid ColumnDefinitions="Auto,*">
+                <Border Grid.Column="0"
+                        Width="44" Height="44"
+                        Background="#DCFCE7" CornerRadius="12"
+                        VerticalAlignment="Center" Margin="0,0,14,0">
+                    <TextBlock Text="✓" FontSize="18" FontWeight="Bold"
+                               Foreground="#16A34A"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <StackPanel Grid.Column="1" Spacing="2" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                    <TextBlock Text="CONTA ATIVA" FontSize="10" FontWeight="Bold"
+                               Foreground="#16A34A"/>
+                    <TextBlock Text="{Binding CurrentUserName}"
+                               FontSize="16" FontWeight="SemiBold" Foreground="#0F172A"
+                               TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                    <TextBlock Text="{Binding CurrentEmail}"
+                               FontSize="13" Foreground="#64748B"
+                               TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Lista de Perfis -->
+        <Border Grid.Row="3" Margin="20,0,20,0">
+            <StackPanel Spacing="10">
+                <TextBlock Text="BUSCAR PERFIL" FontSize="10" FontWeight="Bold"
+                           Foreground="#94A3B8"
+                           Margin="4,0,0,0"/>
+                <TextBox Text="{Binding SearchText}"
+                         PlaceholderText="Digite nome, usuário ou email..."
+                         FontSize="13"
+                         CornerRadius="8"
+                         Padding="10,8"
+                         Background="White"
+                         BorderBrush="#E2E8F0"
+                         BorderThickness="1"
+                         HorizontalAlignment="Stretch">
+                    <TextBox.Styles>
+                        <Style Selector="TextBox">
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Foreground" Value="#0F172A"/>
+                            <Setter Property="BorderBrush" Value="#E2E8F0"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                        </Style>
+                        <Style Selector="TextBox:focus">
+                            <Setter Property="BorderBrush" Value="#3B82F6"/>
+                        </Style>
+                        <Style Selector="TextBox:pointerover /template/ Border#border">
+                            <Setter Property="Background" Value="White"/>
+                        </Style>
+                    </TextBox.Styles>
+                </TextBox>
+                <TextBlock Text="PERFÍS SALVOS" FontSize="10" FontWeight="Bold"
+                           Foreground="#94A3B8"
+                           Margin="4,0,0,0"/>
+                <ScrollViewer>
+                    <StackPanel Spacing="10">
+                        <ItemsControl ItemsSource="{Binding FilteredProfiles}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="models:GitProfile">
+                                <Border Background="White" CornerRadius="14"
+                                        Padding="18,16" Margin="0,0,0,5"
+                                        BoxShadow="0 1 3 0 #1A000000">
+                                    <StackPanel Spacing="10">
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <StackPanel Grid.Column="0" VerticalAlignment="Center" Spacing="3">
+                                                <TextBlock Text="{Binding Name}"
+                                                           FontSize="16" FontWeight="SemiBold"
+                                                           Foreground="#0F172A"/>
+                                                <TextBlock FontSize="13" Foreground="#64748B"
+                                                           TextTrimming="CharacterEllipsis">
+                                                    <TextBlock.Text>
+                                                        <MultiBinding StringFormat="{}{0}  ·  {1}">
+                                                            <Binding Path="UserName"/>
+                                                            <Binding Path="Email"/>
+                                                        </MultiBinding>
+                                                    </TextBlock.Text>
+                                                </TextBlock>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1"
+                                                        Orientation="Horizontal" Spacing="4"
+                                                        VerticalAlignment="Center"
+                                                        Margin="0,-35,0,0">
+                                                <Button Command="{Binding $parent[ItemsControl].((vm:MainWindowViewModel)DataContext).MoveProfileUpCommand}"
+                                                        CommandParameter="{Binding}"
+                                                        Width="24" Height="24" Padding="0"
+                                                        CornerRadius="6"
+                                                        Background="#F8FAFC" Foreground="#64748B"
+                                                        ToolTip.Tip="Mover para cima">
+                                                    <Button.Styles>
+                                                        <Style Selector="Button">
+                                                            <Setter Property="Background" Value="#F8FAFC"/>
+                                                            <Setter Property="Foreground" Value="#64748B"/>
+                                                        </Style>
+                                                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                                                            <Setter Property="Background" Value="#E2E8F0"/>
+                                                        </Style>
+                                                        <Style Selector="Button:pressed /template/ ContentPresenter">
+                                                            <Setter Property="Background" Value="#CBD5E1"/>
+                                                        </Style>
+                                                    </Button.Styles>
+                                                    <Viewbox Width="12" Height="12" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Path Data="M7 14l5-5 5 5z" Fill="#64748B"/>
+                                                    </Viewbox>
+                                                </Button>
+                                                <Button Command="{Binding $parent[ItemsControl].((vm:MainWindowViewModel)DataContext).MoveProfileDownCommand}"
+                                                        CommandParameter="{Binding}"
+                                                        Width="24" Height="24" Padding="0"
+                                                        CornerRadius="6"
+                                                        Background="#F8FAFC" Foreground="#64748B"
+                                                        ToolTip.Tip="Mover para baixo">
+                                                    <Button.Styles>
+                                                        <Style Selector="Button">
+                                                            <Setter Property="Background" Value="#F8FAFC"/>
+                                                            <Setter Property="Foreground" Value="#64748B"/>
+                                                        </Style>
+                                                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                                                            <Setter Property="Background" Value="#E2E8F0"/>
+                                                        </Style>
+                                                        <Style Selector="Button:pressed /template/ ContentPresenter">
+                                                            <Setter Property="Background" Value="#CBD5E1"/>
+                                                        </Style>
+                                                    </Button.Styles>
+                                                    <Viewbox Width="12" Height="12" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Path Data="M7 10l5 5 5-5z" Fill="#64748B"/>
+                                                    </Viewbox>
+                                                </Button>
+                                                <Button Command="{Binding $parent[ItemsControl].((vm:MainWindowViewModel)DataContext).SwitchProfileCommand}"
+                                                        CommandParameter="{Binding}"
+                                                        Width="28" Height="28" Padding="0"
+                                                        CornerRadius="8"
+                                                        Background="#3B82F6" Foreground="White"
+                                                        ToolTip.Tip="Usar">
+                                                    <Button.Styles>
+                                                        <Style Selector="Button">
+                                                            <Setter Property="Background" Value="#3B82F6"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                        </Style>
+                                                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                                                            <Setter Property="Background" Value="#2563EB"/>
+                                                        </Style>
+                                                        <Style Selector="Button:pressed /template/ ContentPresenter">
+                                                            <Setter Property="Background" Value="#1D4ED8"/>
+                                                        </Style>
+                                                    </Button.Styles>
+                                                    <Viewbox Width="14" Height="14" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Path Data="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                                                              Fill="White"/>
+                                                    </Viewbox>
+                                                </Button>
+                                                <Button Command="{Binding $parent[ItemsControl].((vm:MainWindowViewModel)DataContext).EditProfileCommand}"
+                                                        CommandParameter="{Binding}"
+                                                        Width="28" Height="28" Padding="0"
+                                                        CornerRadius="8"
+                                                        Background="#F0FDF4" Foreground="#16A34A"
+                                                        ToolTip.Tip="Editar">
+                                                    <Button.Styles>
+                                                        <Style Selector="Button">
+                                                            <Setter Property="Background" Value="#F0FDF4"/>
+                                                            <Setter Property="Foreground" Value="#16A34A"/>
+                                                        </Style>
+                                                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                                                            <Setter Property="Background" Value="#DCFCE7"/>
+                                                        </Style>
+                                                        <Style Selector="Button:pressed /template/ ContentPresenter">
+                                                            <Setter Property="Background" Value="#BBF7D0"/>
+                                                        </Style>
+                                                    </Button.Styles>
+                                                    <Viewbox Width="14" Height="14" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Path Data="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                                                              Fill="#16A34A"/>
+                                                    </Viewbox>
+                                                </Button>
+                                                <Button Command="{Binding $parent[ItemsControl].((vm:MainWindowViewModel)DataContext).CloneProfileCommand}"
+                                                        CommandParameter="{Binding}"
+                                                        Width="28" Height="28" Padding="0"
+                                                        CornerRadius="8"
+                                                        Background="#F5F3FF" Foreground="#7C3AED"
+                                                        ToolTip.Tip="Clonar">
+                                                    <Button.Styles>
+                                                        <Style Selector="Button">
+                                                            <Setter Property="Background" Value="#F5F3FF"/>
+                                                            <Setter Property="Foreground" Value="#7C3AED"/>
+                                                        </Style>
+                                                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                                                            <Setter Property="Background" Value="#EDE9FE"/>
+                                                        </Style>
+                                                        <Style Selector="Button:pressed /template/ ContentPresenter">
+                                                            <Setter Property="Background" Value="#DDD6FE"/>
+                                                        </Style>
+                                                    </Button.Styles>
+                                                    <Viewbox Width="14" Height="14" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Path Data="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
+                                                              Fill="#7C3AED"/>
+                                                    </Viewbox>
+                                                </Button>
+                                                <Button Command="{Binding $parent[ItemsControl].((vm:MainWindowViewModel)DataContext).DeleteProfileCommand}"
+                                                        CommandParameter="{Binding}"
+                                                        Width="28" Height="28" Padding="0"
+                                                        CornerRadius="8"
+                                                        Background="#FEF2F2" Foreground="#DC2626"
+                                                        ToolTip.Tip="Excluir">
+                                                    <Button.Styles>
+                                                        <Style Selector="Button">
+                                                            <Setter Property="Background" Value="#FEF2F2"/>
+                                                            <Setter Property="Foreground" Value="#DC2626"/>
+                                                        </Style>
+                                                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                                                            <Setter Property="Background" Value="#FEE2E2"/>
+                                                        </Style>
+                                                        <Style Selector="Button:pressed /template/ ContentPresenter">
+                                                            <Setter Property="Background" Value="#FECACA"/>
+                                                        </Style>
+                                                    </Button.Styles>
+                                                    <Viewbox Width="14" Height="14" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Path Data="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                                                              Fill="#DC2626"/>
+                                                    </Viewbox>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                        <!-- Tipo de Conta -->
+                                        <Border Background="#EFF6FF" CornerRadius="8"
+                                                Padding="10,6" IsVisible="{Binding HasRepository}">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <Border Background="#DCFCE7" CornerRadius="6"
+                                                        Padding="8,3">
+                                                    <TextBlock Text="Local" FontSize="10" FontWeight="SemiBold"
+                                                               Foreground="#16A34A"/>
+                                                </Border>
+                                                <TextBlock Text="{Binding RepositoryPath}"
+                                                           FontSize="10" Foreground="#64748B"
+                                                           VerticalAlignment="Center"
+                                                           TextTrimming="CharacterEllipsis"
+                                                           MaxWidth="280"/>
+                                            </StackPanel>
+                                        </Border>
+                                        <Border Background="#EFF6FF" CornerRadius="8"
+                                                Padding="10,6" IsVisible="{Binding HasRepository, Converter={x:Static BoolConverters.Not}}">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <Border Background="#DBEAFE" CornerRadius="6"
+                                                        Padding="8,3">
+                                                    <TextBlock Text="Global" FontSize="10" FontWeight="SemiBold"
+                                                               Foreground="#3B82F6"/>
+                                                </Border>
+                                            </StackPanel>
+                                        </Border>
+                                        <Border Background="#FEF3C7" CornerRadius="8"
+                                                Padding="10,6" IsVisible="{Binding IsActiveGlobal}">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <Border Background="#FCD34D" CornerRadius="6"
+                                                        Padding="8,3">
+                                                    <TextBlock Text="GLOBAL ATIVO" FontSize="10" FontWeight="Bold">
+                                                        <TextBlock.Foreground>
+                                                            <SolidColorBrush Color="#92400E"/>
+                                                        </TextBlock.Foreground>
+                                                    </TextBlock>
+                                                </Border>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+            </StackPanel>
+        </Border>
+
+        <!-- Rodape -->
+        <Border Grid.Row="4" Margin="20,8,20,0" Padding="0">
+            <StackPanel Spacing="10">
+                <Button Command="{Binding AddProfileCommand}"
+                        HorizontalAlignment="Stretch"
+                        Padding="0,14" FontSize="14" FontWeight="SemiBold"
+                        CornerRadius="12"
+                        Background="#EFF6FF" Foreground="#3B82F6"
+                        BorderBrush="#BFDBFE" BorderThickness="1">
+                    <Button.Styles>
+                        <Style Selector="Button">
+                            <Setter Property="Background" Value="#EFF6FF"/>
+                            <Setter Property="Foreground" Value="#3B82F6"/>
+                            <Setter Property="BorderBrush" Value="#BFDBFE"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                        </Style>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background" Value="#DBEAFE"/>
+                        </Style>
+                        <Style Selector="Button:pressed /template/ ContentPresenter">
+                            <Setter Property="Background" Value="#BFDBFE"/>
+                        </Style>
+                    </Button.Styles>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8">
+                        <TextBlock Text="+" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                        <TextBlock Text="Adicionar conta" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button Command="{Binding OpenDonationCommand}"
+                        HorizontalAlignment="Stretch"
+                        Padding="0,12" FontSize="13" FontWeight="SemiBold"
+                        CornerRadius="12"
+                        Background="#FEF2F2" Foreground="#DC2626"
+                        BorderBrush="#FECACA" BorderThickness="1">
+                    <Button.Styles>
+                        <Style Selector="Button">
+                            <Setter Property="Background" Value="#FEF2F2"/>
+                            <Setter Property="Foreground" Value="#DC2626"/>
+                            <Setter Property="BorderBrush" Value="#FECACA"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                        </Style>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background" Value="#FEE2E2"/>
+                        </Style>
+                        <Style Selector="Button:pressed /template/ ContentPresenter">
+                            <Setter Property="Background" Value="#FECACA"/>
+                        </Style>
+                    </Button.Styles>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8">
+                        <Viewbox Width="16" Height="16" Stretch="Uniform">
+                            <Path Data="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                                  Fill="#DC2626"/>
+                        </Viewbox>
+                        <TextBlock Text="Cafézin pro dev" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="5" Margin="20,8,20,20" Padding="14,10"
+                Background="White" CornerRadius="10"
+                BoxShadow="0 1 2 0 #1A000000">
+            <StackPanel Orientation="Horizontal" Spacing="6"
+                        HorizontalAlignment="Center">
+                <TextBlock Text="{Binding CurrentUserName}"
+                           FontSize="12" FontWeight="SemiBold"
+                           Foreground="#0F172A"/>
+                <TextBlock Text="·"
+                           FontSize="12" Foreground="#94A3B8"/>
+                <TextBlock Text="{Binding CurrentEmail}"
+                           FontSize="12"
+                           Foreground="#64748B"/>
+                <TextBlock Text="·"
+                           FontSize="12" Foreground="#94A3B8"/>
+                <TextBlock Text="{Binding CurrentScope}"
+                           FontSize="12" FontWeight="SemiBold"
+                           Foreground="#3B82F6"/>
+                <TextBlock Text="·"
+                           FontSize="12" Foreground="#94A3B8"/>
+                <TextBlock FontSize="12" Foreground="#64748B">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} perfil(is)">
+                            <Binding Path="FilteredProfileCount"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </StackPanel>
+        </Border>
+
+    </Grid>
+</Window>

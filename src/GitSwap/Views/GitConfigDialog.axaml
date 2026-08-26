@@ -1,0 +1,49 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="GitSwap.Views.GitConfigDialog"
+        Title="Configuração do Git"
+        Width="700" Height="500"
+        MinWidth="500" MinHeight="350"
+        WindowStartupLocation="CenterOwner"
+        Background="#F3F4F6">
+
+    <Grid RowDefinitions="*,Auto">
+
+        <!-- Conteudo -->
+        <Border Grid.Row="0" Background="#FFFFFF">
+            <ScrollViewer Padding="24,20">
+                <TextBlock x:Name="ConfigText"
+                           FontSize="13"
+                           FontFamily="Consolas,Menlo,monospace"
+                           Foreground="#374151"
+                           TextWrapping="Wrap"
+                           Text="Carregando..."/>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Footer -->
+        <Border Grid.Row="1"
+                Background="#F9FAFB"
+                BorderBrush="#E5E7EB" BorderThickness="0,1,0,0"
+                Padding="24,12">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="12">
+                <Button x:Name="CloseButton"
+                        Content="Fechar"
+                        Padding="32,10" FontSize="14" FontWeight="SemiBold"
+                        CornerRadius="6"
+                        Background="#0078D4" Foreground="White"
+                        BorderBrush="#005A9E" BorderThickness="1">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background" Value="#005A9E"/>
+                        </Style>
+                        <Style Selector="Button:pressed /template/ ContentPresenter">
+                            <Setter Property="Background" Value="#004578"/>
+                        </Style>
+                    </Button.Styles>
+                </Button>
+            </StackPanel>
+        </Border>
+
+    </Grid>
+</Window>

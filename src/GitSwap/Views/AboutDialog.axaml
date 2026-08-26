@@ -1,0 +1,104 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="GitSwap.Views.AboutDialog"
+        Title="Sobre o GitSwap"
+        Width="480" Height="560"
+        CanResize="False"
+        WindowStartupLocation="CenterOwner"
+        Background="#FFFFFF">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Header -->
+        <Border Grid.Row="0" Padding="40,40,40,32" Background="#FFFFFF">
+            <StackPanel Spacing="12" HorizontalAlignment="Center">
+                <Image Source="avares://GitSwap/Assets/logo.png"
+                       Height="52"
+                       RenderOptions.BitmapInterpolationMode="HighQuality"
+                       HorizontalAlignment="Center"/>
+                <TextBlock Text="v1.0.0"
+                           FontSize="13"
+                           Foreground="#94A3B8"
+                           HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Conteudo -->
+        <Border Grid.Row="1" Margin="40,0,40,0" Background="#FFFFFF">
+            <ScrollViewer>
+                <StackPanel Spacing="28" HorizontalAlignment="Center">
+                    
+                    <!-- Plataformas -->
+                    <StackPanel Spacing="6" HorizontalAlignment="Center">
+                        <TextBlock Text="PLATAFORMAS" FontSize="11" FontWeight="SemiBold"
+                                   Foreground="#94A3B8" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Windows · macOS · Linux"
+                                   FontSize="14" Foreground="#475569"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!-- Sistema -->
+                    <StackPanel Spacing="6" HorizontalAlignment="Center">
+                        <TextBlock Text="SISTEMA" FontSize="11" FontWeight="SemiBold"
+                                   Foreground="#94A3B8" HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="SystemInfoText"
+                                   Text="Carregando..."
+                                   FontSize="14" Foreground="#475569"
+                                   TextAlignment="Center" TextWrapping="Wrap"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!-- Compilacao -->
+                    <StackPanel Spacing="6" HorizontalAlignment="Center">
+                        <TextBlock Text="COMPILAÇÃO" FontSize="11" FontWeight="SemiBold"
+                                   Foreground="#94A3B8" HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="BuildDateText"
+                                   Text="Carregando..."
+                                   FontSize="14" Foreground="#475569"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!-- Licenca -->
+                    <StackPanel Spacing="6" HorizontalAlignment="Center">
+                        <TextBlock Text="LICENÇA" FontSize="11" FontWeight="SemiBold"
+                                   Foreground="#94A3B8" HorizontalAlignment="Center"/>
+                        <TextBlock Text="GNU General Public License v3.0"
+                                   FontSize="14" Foreground="#475569"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!-- Autor -->
+                    <StackPanel Spacing="6" HorizontalAlignment="Center">
+                        <TextBlock Text="AUTOR" FontSize="11" FontWeight="SemiBold"
+                                   Foreground="#94A3B8" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Wanfranklin Alves"
+                                   FontSize="14" Foreground="#475569"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Botao Fechar -->
+        <Border Grid.Row="2" Padding="40,24,40,40" Background="#FFFFFF">
+            <Button x:Name="CloseButton"
+                    Content="Fechar"
+                    HorizontalAlignment="Center"
+                    Padding="48,12" FontSize="14" FontWeight="SemiBold"
+                    CornerRadius="8"
+                    Background="#3B82F6" Foreground="White"
+                    BorderBrush="#2563EB" BorderThickness="1">
+                <Button.Styles>
+                    <Style Selector="Button:pointerover /template/ ContentPresenter">
+                        <Setter Property="Background" Value="#2563EB"/>
+                    </Style>
+                    <Style Selector="Button:pressed /template/ ContentPresenter">
+                        <Setter Property="Background" Value="#1D4ED8"/>
+                    </Style>
+                </Button.Styles>
+            </Button>
+        </Border>
+
+    </Grid>
+</Window>

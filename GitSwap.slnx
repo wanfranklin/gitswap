@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/GitSwap/GitSwap.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/GitSwap.Tests/GitSwap.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,153 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:GitSwap.ViewModels"
+        x:Class="GitSwap.Views.AddProfileDialog"
+        x:DataType="vm:AddProfileDialogViewModel"
+        Title="Nova Conta"
+        Width="540" Height="685"
+        CanResize="False"
+        WindowStartupLocation="CenterOwner"
+        Background="#F1F5F9">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Header -->
+        <Border Grid.Row="0" Padding="32,32,32,24" Background="White">
+            <StackPanel Spacing="8">
+                <TextBlock Text="Nova Conta Git"
+                           FontSize="26" FontWeight="Bold"
+                           Foreground="#0F172A"/>
+                <TextBlock Text="Preencha os dados do perfil abaixo"
+                           FontSize="15"
+                           Foreground="#64748B"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Formulario -->
+        <ScrollViewer Grid.Row="1" Margin="32,24,32,0">
+            <StackPanel Spacing="24">
+
+                <!-- Nome do Perfil -->
+                <StackPanel Spacing="10">
+                    <TextBlock Text="NOME DO PERFIL" FontSize="12" FontWeight="SemiBold"
+                               Foreground="#475569"/>
+                    <Border Background="White" CornerRadius="12"
+                            BorderBrush="#CBD5E1" BorderThickness="1">
+                        <TextBox Text="{Binding ProfileName}"
+                                 PlaceholderText="Ex: Trabalho, Pessoal..."
+                                 FontSize="16" Padding="16,14"
+                                 HorizontalContentAlignment="Left"
+                                 BorderThickness="0" Background="Transparent"/>
+                    </Border>
+                </StackPanel>
+
+                <!-- Nome do Usuario Git -->
+                <StackPanel Spacing="10">
+                    <TextBlock Text="NOME DO USUÁRIO GIT" FontSize="12" FontWeight="SemiBold"
+                               Foreground="#475569"/>
+                    <Border Background="White" CornerRadius="12"
+                            BorderBrush="#CBD5E1" BorderThickness="1">
+                        <TextBox Text="{Binding UserName}"
+                                 PlaceholderText="Ex: João Silva"
+                                 FontSize="16" Padding="16,14"
+                                 HorizontalContentAlignment="Left"
+                                 BorderThickness="0" Background="Transparent"/>
+                    </Border>
+                </StackPanel>
+
+                <!-- Email -->
+                <StackPanel Spacing="10">
+                    <TextBlock Text="EMAIL" FontSize="12" FontWeight="SemiBold"
+                               Foreground="#475569"/>
+                    <Border Background="White" CornerRadius="12"
+                            BorderBrush="#CBD5E1" BorderThickness="1">
+                        <TextBox Text="{Binding Email}"
+                                 PlaceholderText="Ex: joao@empresa.com"
+                                 FontSize="16" Padding="16,14"
+                                 HorizontalContentAlignment="Left"
+                                 BorderThickness="0" Background="Transparent"/>
+                    </Border>
+                </StackPanel>
+
+                <!-- Pasta do Repositorio -->
+                <StackPanel Spacing="10">
+                    <TextBlock Text="PASTA DO REPOSITÓRIO ( OPCIONAL )" FontSize="12" FontWeight="SemiBold"
+                               Foreground="#475569"/>
+                    <Border Background="White" CornerRadius="12"
+                            BorderBrush="#CBD5E1" BorderThickness="1">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBox Grid.Column="0"
+                                     Text="{Binding RepositoryPath}"
+                                     PlaceholderText="Selecione a pasta do repositório..."
+                                     FontSize="16" Padding="16,14"
+                                     HorizontalContentAlignment="Left"
+                                     BorderThickness="0" Background="Transparent"/>
+                            <Button x:Name="BrowseButton" Grid.Column="1"
+                                    Content="Procurar..."
+                                    Padding="16,14" FontSize="14" FontWeight="SemiBold"
+                                    Margin="4,4,6,4"
+                                    CornerRadius="8"
+                                    Background="#E2E8F0" Foreground="#334155"
+                                    BorderBrush="#CBD5E1" BorderThickness="1">
+                                <Button.Styles>
+                                    <Style Selector="Button:pointerover /template/ ContentPresenter">
+                                        <Setter Property="Background" Value="#CBD5E1"/>
+                                    </Style>
+                                    <Style Selector="Button:pressed /template/ ContentPresenter">
+                                        <Setter Property="Background" Value="#94A3B8"/>
+                                    </Style>
+                                </Button.Styles>
+                            </Button>
+                        </Grid>
+                    </Border>
+                    <TextBlock FontSize="12" Foreground="#64748B" Margin="4,0,0,0"
+                               Text="Se vazio, aplica globalmente. Se preenchido, aplica localmente no repositório."/>
+                </StackPanel>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Botoes -->
+        <Border Grid.Row="2" Padding="32,24,32,32" Background="White">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                <Button x:Name="CancelButton" Grid.Column="0"
+                        Content="Cancelar"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Padding="0,16" FontSize="16" FontWeight="SemiBold"
+                        CornerRadius="12"
+                        Background="#FEE2E2" Foreground="#DC2626"
+                        BorderBrush="#FECACA" BorderThickness="1">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background" Value="#FECACA"/>
+                            <Setter Property="Foreground" Value="#B91C1C"/>
+                        </Style>
+                        <Style Selector="Button:pressed /template/ ContentPresenter">
+                            <Setter Property="Background" Value="#F87171"/>
+                            <Setter Property="Foreground" Value="#FFFFFF"/>
+                        </Style>
+                    </Button.Styles>
+                </Button>
+                <Button x:Name="SaveButton" Grid.Column="1"
+                        Content="Salvar"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Padding="40,16" FontSize="16" FontWeight="SemiBold"
+                        CornerRadius="12"
+                        Background="#3B82F6" Foreground="White"
+                        BorderBrush="#2563EB" BorderThickness="1">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background" Value="#2563EB"/>
+                        </Style>
+                        <Style Selector="Button:pressed /template/ ContentPresenter">
+                            <Setter Property="Background" Value="#1D4ED8"/>
+                        </Style>
+                    </Button.Styles>
+                </Button>
+            </Grid>
+        </Border>
+
+    </Grid>
+</Window>

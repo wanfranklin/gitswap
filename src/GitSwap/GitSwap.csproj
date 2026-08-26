@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Version>1.0.0</Version>
+    <Authors>Wanfranklin Alves</Authors>
+    <Description>Gerencie e alterne entre diferentes identidades Git de forma simples e rapida.</Description>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/wanfranklin/gitswap</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\icon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="12.1.1" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.1.1" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.1" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.1" />
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+  </ItemGroup>
+
+  <!-- macOS App Bundle Configuration -->
+  <Target Name="CreateMacOSAppBundle" AfterTargets="Build" Condition="$([MSBuild]::IsOSPlatform('OSX')) And Exists('$(MSBuildProjectDirectory)/Platform/macOS/Info.plist')">
+    <PropertyGroup>
+      <AppBundlePath>$(OutputPath)GitSwap.app</AppBundlePath>
+    </PropertyGroup>
+    
+    <MakeDir Directories="$(AppBundlePath)/Contents/MacOS" />
+    <MakeDir Directories="$(AppBundlePath)/Contents/Resources" />
+    
+    <Copy SourceFiles="$(MSBuildProjectDirectory)/Platform/macOS/Info.plist" DestinationFiles="$(AppBundlePath)/Contents/Info.plist" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)/Platform/macOS/icon.icns" DestinationFiles="$(AppBundlePath)/Contents/Resources/icon.icns" />
+    <Copy SourceFiles="$(OutputPath)GitSwap.dll" DestinationFiles="$(AppBundlePath)/Contents/MacOS/GitSwap.dll" />
+    <Copy SourceFiles="$(OutputPath)GitSwap" DestinationFiles="$(AppBundlePath)/Contents/MacOS/GitSwap" SkipUnchangedFiles="true" />
+    
+    <ItemGroup>
+      <AppBundleDeps Include="$(OutputPath)*.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(AppBundleDeps)" DestinationFolder="$(AppBundlePath)/Contents/MacOS" SkipUnchangedFiles="true" />
+    
+    <Message Importance="High" Text="Created macOS app bundle at: $(AppBundlePath)" />
+    
+    <!-- Sign the app bundle (ad-hoc) -->
+    <Exec Command="chmod +x $(MSBuildProjectDirectory)/Platform/macOS/sign-app.sh &amp;&amp; $(MSBuildProjectDirectory)/Platform/macOS/sign-app.sh $(AppBundlePath)" />
+  </Target>
+</Project>
